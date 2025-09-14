@@ -7,11 +7,9 @@ from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 import time
 
-# Chrome options
 options = webdriver.ChromeOptions()
 options.add_argument("--headless")  
 
-# Setup driver
 service = Service(ChromeDriverManager().install())
 time.sleep(2)
 driver = webdriver.Chrome(service=service, options=options)
