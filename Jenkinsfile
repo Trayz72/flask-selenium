@@ -1,29 +1,27 @@
 pipeline {
     agent any
+    
     stages {
-        stage('Setup Python Env') {
+        stage('Setup') {
             steps {
-                sh 'python3 -m venv venv'
-                sh './venv/bin/pip install --upgrade pip'
-                sh './venv/bin/pip install -r requirements.txt'
+                sh 'python3 -m venv venv'                    
+                sh './venv/bin/pip install -r requirements.txt' 
             }
         }
-        stage('Run Unit Tests') {
+        
+        stage('Unit Tests') {
             steps {
-                sh 'PYTHONPATH=. ./venv/bin/pytest -v tests/test_unit.py'
+                sh './venv/bin/pytest tests/'  
             }
         }
-
-        stage('Run Flask in Background') {
+        
+        stage('UI Tests') {
             steps {
-                sh 'nohup ./venv/bin/python app.py &'
-                sh 'sleep 5'  
-            }
-        }
-        stage('Run Selenium Tests') {
-            steps {
-                sh './venv/bin/python tests/test_login.py --headless'
+                sh './venv/bin/python app.py &'  
+                sh 'sleep 3'                     
+                sh './venv/bin/python tests/test_login.py'  
             }
         }
     }
+    
 }
