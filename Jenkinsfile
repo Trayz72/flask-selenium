@@ -10,14 +10,12 @@ pipeline {
                 sh './venv/bin/pip install -r requirements.txt'
             }
         }
-
         stage('Run Flask in Background') {
             steps {
                 sh 'nohup ./venv/bin/python app.py &'
-                sh 'sleep 5'  // wait for Flask to start
+                sh 'sleep 5'  
             }
         }
-
         stage('Run Selenium Tests') {
             steps {
                 sh './venv/bin/python tests/test_login.py --headless'
