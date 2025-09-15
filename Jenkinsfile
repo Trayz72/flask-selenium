@@ -8,6 +8,11 @@ pipeline {
                 sh './venv/bin/pip install -r requirements.txt'
             }
         }
+        stage('Run Unit Tests') {
+            steps {
+                sh './venv/bin/pytest -v tests/test_unit.py'
+            }
+        }
         stage('Run Flask in Background') {
             steps {
                 sh 'nohup ./venv/bin/python app.py &'
